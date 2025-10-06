@@ -677,6 +677,9 @@ void adiv5_mem_write_bytes(
 		src = adiv5_pack_data(begin, src, &value, align);
 		/* And copy the result to the target */
 		adiv5_dp_write(ap->dp, ADIV5_AP_DRW, value);
+
+		/* Workaround for issues on STM32F1 */
+		adiv5_dp_read(ap->dp, ADIV5_DP_RDBUFF);
 	}
 	/* Make sure this write is complete by doing a dummy read */
 	adiv5_dp_read(ap->dp, ADIV5_DP_RDBUFF);
